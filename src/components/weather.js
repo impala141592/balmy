@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./search.js";
+import CurrentWeather from "./currentWeather.js";
+import Forecast from "./forecast.js";
 
 const WeatherApp = () => {
-  const [locationData, setLocationData] = useState(null);
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [temperature, setTemperature] = useState(null);
+  const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,14 +26,9 @@ const WeatherApp = () => {
         return response.json();
       })
       .then((data) => {
-        const city = data.location.name;
-        const temperature = data.current.temp_c;
-        const country = data.location.country;
-
-        setLocationData({
-          city: `${city}, ${country}`,
-          temperature,
-        });
+        setCity(data.location.name);
+        setCountry(data.location.country);
+        setTemperature(data.current.temp_c);
 
         setLoading(false);
       })
@@ -38,9 +38,44 @@ const WeatherApp = () => {
       });
   };
 
-  const handleSearch = (city) => {
-    if (city) {
-      fetchWeatherByCoordinates(city);
+  const fetch7DayWeatherForecast = (city) => {
+    const apiKey = "fc0844b2a1384e18bc8154636230211";
+    const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=7&aqi=no`;
+
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setForecast(data.forecast.forecastday);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch 7-day weather forecast: " + error);
+      });
+  };
+
+  const formatDay = (date) => {
+    const options = { weekday: "long" };
+    return new Date(date).toLocaleDateString("en-US", options);
+  };
+
+  const formatDate = (date) => {
+    const options = { day: "numeric", month: "long" };
+    return new Date(date).toLocaleDateString("en-US", options);
+  };
+
+  const handleSearch = (userCity) => {
+    if (userCity) {
+      setCity("");
+      setCountry("");
+      setTemperature(null);
+      setLoading(true);
+      setError(null);
+      fetchWeatherByCoordinates(userCity);
+      fetch7DayWeatherForecast(userCity);
     }
   };
 
@@ -49,7 +84,8 @@ const WeatherApp = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          fetchWeatherByCoordinates(latitude, longitude);
+          fetchWeatherByCoordinates(`${latitude},${longitude}`);
+          fetch7DayWeatherForecast(city);
         },
         (error) => {
           setError(new Error("Geolocation error: " + error.message));
@@ -64,19 +100,24 @@ const WeatherApp = () => {
 
   useEffect(() => {
     fetchWeatherForCurrentLocation();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div className="weather-dashboard">
-      <SearchBar onSearch={handleSearch} />
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {locationData && (
-        <div>
-          <h2>{locationData.city}</h2>
-          <p>Temperature: {locationData.temperature}°C</p>
-        </div>
-      )}
+      <SearchBar onSearch={handleSearch} loading={loading} error={error} />
+      <CurrentWeather city={city} country={country} temperature={temperature} />
+      <div className="forecast">
+        {forecast.map((day, index) => (
+          <Forecast
+            key={index}
+            day={formatDay(day.date)}
+            date={formatDate(day.date)}
+            maxTemp={day.day.maxtemp_c}
+            minTemp={day.day.mintemp_c}
+          />
+        ))}
+      </div>
     </div>
   );
 };
