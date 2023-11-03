@@ -13,7 +13,7 @@ const WeatherApp = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [defaultLocation, setDefaultLocation] = useState(""); // Set your default location here
+  const [defaultLocation] = useState(""); // Set your default location here
 
   const fetchWeatherByCoordinates = (latitude, longitude) => {
     setLoading(true);
@@ -56,8 +56,6 @@ const WeatherApp = () => {
       .then((data) => {
         const forecastData = data.forecast.forecastday;
         setForecast(forecastData);
-
-        // Calculate maxTempAll and minTempAll
         const maxTemps = forecastData.map((day) => day.day.maxtemp_c);
         const minTemps = forecastData.map((day) => day.day.mintemp_c);
         setMaxTempAll(Math.max(...maxTemps));
@@ -91,7 +89,6 @@ const WeatherApp = () => {
   };
 
   useEffect(() => {
-    // Fetch weather for the default location
     if (defaultLocation) {
       fetchWeatherByCoordinates(defaultLocation);
       fetch7DayWeatherForecast(defaultLocation);

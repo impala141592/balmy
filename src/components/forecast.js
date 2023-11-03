@@ -14,7 +14,6 @@ const Forecast = ({
         <span className="forecast-date">{date}</span>
       </div>
       <div className="forecast-temp-graph">
-        <span className="forecast-temp">{minTempAll}°C</span>
         <span className="forecast-temp">{minTemp}°C</span>
         <TempBar
           minTemp={minTemp}
@@ -27,7 +26,6 @@ const Forecast = ({
           <div className="temp-bar-inner">{currentTemp}</div>
         </div> */}
         <span className="forecast-temp">{maxTemp}°C</span>
-        <span className="forecast-temp"> {maxTempAll}°C</span>
       </div>
     </div>
   );
@@ -35,7 +33,6 @@ const Forecast = ({
 
 const TempBar = ({ minTemp, maxTemp, maxTempAll, minTempAll, currentTemp }) => {
   const width = 200;
-  const amplitudeAll = maxTempAll - minTempAll;
   const leftPosition = ((minTemp - minTempAll) / minTemp) * width;
   const rightPosition = ((maxTempAll - maxTemp) / maxTempAll) * width;
   const currentPosition = ((currentTemp - minTempAll) / currentTemp) * width;
