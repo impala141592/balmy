@@ -8,8 +8,12 @@ const WeatherApp = () => {
   const [country, setCountry] = useState("");
   const [temperature, setTemperature] = useState(null);
   const [forecast, setForecast] = useState([]);
+  const [maxTempAll, setMaxTempAll] = useState(null);
+  const [minTempAll, setMinTempAll] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [defaultLocation, setDefaultLocation] = useState(""); // Set your default location here
 
   const fetchWeatherByCoordinates = (latitude, longitude) => {
     setLoading(true);
@@ -50,7 +54,14 @@ const WeatherApp = () => {
         return response.json();
       })
       .then((data) => {
-        setForecast(data.forecast.forecastday);
+        const forecastData = data.forecast.forecastday;
+        setForecast(forecastData);
+
+        // Calculate maxTempAll and minTempAll
+        const maxTemps = forecastData.map((day) => day.day.maxtemp_c);
+        const minTemps = forecastData.map((day) => day.day.mintemp_c);
+        setMaxTempAll(Math.max(...maxTemps));
+        setMinTempAll(Math.min(...minTemps));
       })
       .catch((error) => {
         console.error("Failed to fetch 7-day weather forecast: " + error);
@@ -79,42 +90,30 @@ const WeatherApp = () => {
     }
   };
 
-  const fetchWeatherForCurrentLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          fetchWeatherByCoordinates(`${latitude},${longitude}`);
-          fetch7DayWeatherForecast(city);
-        },
-        (error) => {
-          setError(new Error("Geolocation error: " + error.message));
-          setLoading(false);
-        }
-      );
-    } else {
-      setError(new Error("Geolocation is not supported by your browser."));
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchWeatherForCurrentLocation();
+    // Fetch weather for the default location
+    if (defaultLocation) {
+      fetchWeatherByCoordinates(defaultLocation);
+      fetch7DayWeatherForecast(defaultLocation);
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [defaultLocation]);
 
   return (
     <div className="weather-dashboard">
       <SearchBar onSearch={handleSearch} loading={loading} error={error} />
       <CurrentWeather city={city} country={country} temperature={temperature} />
       <div className="forecast">
-        {forecast.map((day, index) => (
+        {forecast.slice(0, 7).map((day, index) => (
           <Forecast
             key={index}
             day={formatDay(day.date)}
             date={formatDate(day.date)}
             maxTemp={day.day.maxtemp_c}
             minTemp={day.day.mintemp_c}
+            maxTempAll={maxTempAll}
+            minTempAll={minTempAll}
+            currentTemp={index === 0 ? temperature : null}
           />
         ))}
       </div>

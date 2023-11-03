@@ -64,6 +64,10 @@
     }
   }
 
+  .forecast-temp {
+    width: 50px;
+  }
+
   .forecast-temp-graph {
     display: flex;
     align-items: center;
@@ -79,11 +83,21 @@
   background: gainsboro;
   display: flex;
   align-items: center;
+  position: relative;
 
   .temp-bar-inner {
     background: black;
     height: 8px;
     border-radius: 4px;
-    width: 90px;
+    position: absolute;
+  }
+
+  .temp-bar-current {
+    background: white;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1000;
   }
 }
