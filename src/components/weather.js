@@ -13,7 +13,7 @@ const WeatherApp = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [defaultLocation] = useState(""); // Set your default location here
+  const [defaultLocation] = useState("Warsaw"); // Set your default location here
 
   const fetchWeatherByCoordinates = (latitude, longitude) => {
     setLoading(true);
