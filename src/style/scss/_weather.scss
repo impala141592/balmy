@@ -1,0 +1,26 @@
+.weather-dashboard {
+  background: gainsboro;
+  height: calc(100vh - 40px);
+  padding: 24px;
+}
+
+.search {
+  background: white;
+  height: 40px;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.search-button {
+  height: 20px;
+  width: 20px;
+
+  img {
+    height: inherit;
+    width: inherit;
+    object-fit: contain;
+  }
+}
