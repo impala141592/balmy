@@ -1,6 +1,5 @@
 import "./style/css/style.css";
 import WeatherApp from "./components/weather";
-import Header from "./components/header";
 
 function App() {
   return (
