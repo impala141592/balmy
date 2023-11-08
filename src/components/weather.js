@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "./search.js";
 import CurrentWeather from "./currentWeather.js";
 import Forecast from "./forecast.js";
+import Options from "./options.js";
 
 const WeatherApp = () => {
   const [city, setCity] = useState("");
@@ -12,6 +13,7 @@ const WeatherApp = () => {
   const [minTempAll, setMinTempAll] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [unit, setUnit] = useState("°C");
 
   const [defaultLocation] = useState("Warsaw"); // Set your default location here
 
@@ -32,7 +34,12 @@ const WeatherApp = () => {
       .then((data) => {
         setCity(data.location.name);
         setCountry(data.location.country);
-        setTemperature(data.current.temp_c);
+
+        if (unit === "°C") {
+          setTemperature(data.current.temp_c);
+        } else {
+          setTemperature(data.current.temp_f);
+        }
 
         setLoading(false);
       })
@@ -56,8 +63,12 @@ const WeatherApp = () => {
       .then((data) => {
         const forecastData = data.forecast.forecastday;
         setForecast(forecastData);
-        const maxTemps = forecastData.map((day) => day.day.maxtemp_c);
-        const minTemps = forecastData.map((day) => day.day.mintemp_c);
+        const maxTemps = forecastData.map((day) =>
+          unit === "°C" ? day.day.maxtemp_c : day.day.maxtemp_f
+        );
+        const minTemps = forecastData.map((day) =>
+          unit === "°C" ? day.day.mintemp_c : day.day.mintemp_f
+        );
         setMaxTempAll(Math.max(...maxTemps));
         setMinTempAll(Math.min(...minTemps));
       })
@@ -96,21 +107,47 @@ const WeatherApp = () => {
     // eslint-disable-next-line
   }, [defaultLocation]);
 
+  const toggleUnit = () => {
+    if (unit === "°C") {
+      setUnit("°F");
+      setTemperature(((temperature * 9) / 5 + 32).toFixed(1));
+      setMaxTempAll(((maxTempAll * 9) / 5 + 32).toFixed(1));
+      setMinTempAll(((minTempAll * 9) / 5 + 32).toFixed(1));
+    } else {
+      setUnit("°C");
+      setTemperature((((temperature - 32) * 5) / 9).toFixed(1));
+      setMaxTempAll((((maxTempAll - 32) * 5) / 9).toFixed(1));
+      setMinTempAll((((minTempAll - 32) * 5) / 9).toFixed(1));
+    }
+  };
+
   return (
     <div className="weather-dashboard">
-      <SearchBar onSearch={handleSearch} loading={loading} error={error} />
-      <CurrentWeather city={city} country={country} temperature={temperature} />
+      <div className="search-options">
+        <SearchBar onSearch={handleSearch} loading={loading} error={error} />
+        <Options
+          unit={unit}
+          onUnitToggle={() => toggleUnit(unit === "°C" ? "°F" : "°C")}
+        />
+      </div>
+      <CurrentWeather
+        city={city}
+        country={country}
+        temperature={temperature}
+        unit={unit}
+      />
       <div className="forecast">
         {forecast.slice(0, 7).map((day, index) => (
           <Forecast
             key={index}
             day={formatDay(day.date)}
             date={formatDate(day.date)}
-            maxTemp={day.day.maxtemp_c}
-            minTemp={day.day.mintemp_c}
+            maxTemp={unit === "°C" ? day.day.maxtemp_c : day.day.maxtemp_f}
+            minTemp={unit === "°C" ? day.day.mintemp_c : day.day.mintemp_f}
             maxTempAll={maxTempAll}
             minTempAll={minTempAll}
             currentTemp={index === 0 ? temperature : null}
+            unit={unit}
           />
         ))}
       </div>
