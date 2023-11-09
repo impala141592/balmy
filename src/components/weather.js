@@ -130,26 +130,28 @@ const WeatherApp = () => {
           onUnitToggle={() => toggleUnit(unit === "°C" ? "°F" : "°C")}
         />
       </div>
-      <CurrentWeather
-        city={city}
-        country={country}
-        temperature={temperature}
-        unit={unit}
-      />
-      <div className="forecast">
-        {forecast.slice(0, 7).map((day, index) => (
-          <Forecast
-            key={index}
-            day={formatDay(day.date)}
-            date={formatDate(day.date)}
-            maxTemp={unit === "°C" ? day.day.maxtemp_c : day.day.maxtemp_f}
-            minTemp={unit === "°C" ? day.day.mintemp_c : day.day.mintemp_f}
-            maxTempAll={maxTempAll}
-            minTempAll={minTempAll}
-            currentTemp={index === 0 ? temperature : null}
-            unit={unit}
-          />
-        ))}
+      <div className="weather">
+        <CurrentWeather
+          city={city}
+          country={country}
+          temperature={temperature}
+          unit={unit}
+        />
+        <div className="forecast">
+          {forecast.slice(0, 7).map((day, index) => (
+            <Forecast
+              key={index}
+              day={formatDay(day.date)}
+              date={formatDate(day.date)}
+              maxTemp={unit === "°C" ? day.day.maxtemp_c : day.day.maxtemp_f}
+              minTemp={unit === "°C" ? day.day.mintemp_c : day.day.mintemp_f}
+              maxTempAll={maxTempAll}
+              minTempAll={minTempAll}
+              currentTemp={index === 0 ? temperature : null}
+              unit={unit}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

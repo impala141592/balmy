@@ -12,23 +12,44 @@
   border-spacing: 0;
 }
 
-.weather-dashboard {
+.App {
   background: gainsboro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-dashboard {
   height: 100vh;
   padding: 24px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .weather-dashboard {
+    width: 768px;
+  }
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .current-weather {
   background: black;
   color: white;
   padding: 12px;
+  padding-bottom: 24px;
   width: 100%;
   height: 200px;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: -12px;
 }
 .current-weather .current-location {
   display: flex;
@@ -46,6 +67,7 @@
   background: white;
   padding: 12px;
   border-radius: 12px;
+  width: 100%;
 }
 .forecast .forecast-item {
   display: flex;
@@ -69,7 +91,14 @@
   font-weight: 700;
 }
 .forecast .forecast-temp {
-  width: 50px;
+  width: 40px;
+  font-size: 14px;
+}
+.forecast .forecast-temp.min {
+  text-align: right;
+}
+.forecast .forecast-temp.max {
+  text-align: left;
 }
 .forecast .forecast-temp-graph {
   display: flex;
@@ -131,6 +160,7 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
+  width: 100%;
 }
 
 .search {
