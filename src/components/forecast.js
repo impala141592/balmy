@@ -38,18 +38,17 @@ const Forecast = ({
   );
 };
 
-const TempBar = ({
-  minTemp,
-  maxTemp,
-  maxTempAll,
-  minTempAll,
-  currentTemp,
-  unit,
-}) => {
+const TempBar = ({ minTemp, maxTemp, maxTempAll, minTempAll, currentTemp }) => {
   const width = 200;
-  const leftPosition = ((minTemp - minTempAll) / minTemp) * width;
-  const rightPosition = ((maxTempAll - maxTemp) / maxTempAll) * width;
-  const currentPosition = ((currentTemp - minTempAll) / currentTemp) * width;
+  const leftPosition =
+    ((minTemp - minTempAll) / (maxTempAll - minTempAll)) * width;
+  const rightPosition =
+    ((maxTempAll - maxTemp) / (maxTempAll - minTempAll)) * width;
+
+  // const currentPosition = ((currentTemp - minAmplitude) / currentTemp) * width;
+
+  const currentPosition =
+    ((currentTemp - minTempAll) / (maxTempAll - minTempAll)) * width;
 
   return (
     <div className="temp-bar" style={{ width: `${width}px` }}>
