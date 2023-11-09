@@ -31,7 +31,7 @@ const SearchBar = ({ onSearch, loading, error }) => {
           placeholder=""
         />
         <button className="search-button" onClick={handleSearch}>
-          <img src={searchIcon} alt="" />
+          <img src={searchIcon} alt="search" />
         </button>
       </div>
       {/* add spinner here */}

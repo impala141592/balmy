@@ -174,7 +174,28 @@
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: tomato;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.options-button .bar {
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  background: black;
+  transition: all 0.2s ease-in-out;
+}
+.options-button .bar:nth-child(1).visible {
+  transform: translateY(6px) rotate(45deg);
+}
+.options-button .bar:nth-child(2).visible {
+  width: 0;
+}
+.options-button .bar:nth-child(3).visible {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 .options-menu {

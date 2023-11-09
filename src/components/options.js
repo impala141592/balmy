@@ -33,7 +33,11 @@ function Options({ onUnitToggle, unit }) {
           toggleMenu();
           handleButtonClick(e);
         }}
-      ></button>
+      >
+        <div className={`${menuVisible ? "bar visible" : "bar"}`}></div>
+        <div className={`${menuVisible ? "bar visible" : "bar"}`}></div>
+        <div className={`${menuVisible ? "bar visible" : "bar"}`}></div>
+      </button>
       {menuVisible && (
         <div className="options-menu" ref={menuRef}>
           <div className="option">
