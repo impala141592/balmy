@@ -13,10 +13,16 @@
 }
 
 .App {
-  background: gainsboro;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+.App.dark-theme {
+  background: slategray;
+}
+.App.light-theme {
+  background: gainsboro;
 }
 
 .weather-dashboard {
@@ -39,7 +45,6 @@
 }
 
 .current-weather {
-  background: black;
   color: white;
   padding: 12px;
   padding-bottom: 24px;
@@ -50,6 +55,13 @@
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: -12px;
+  transition: all 0.5s ease-in-out;
+}
+.current-weather.dark-theme {
+  background: black;
+}
+.current-weather.light-theme {
+  background: slategray;
 }
 .current-weather .current-location {
   display: flex;
@@ -64,18 +76,29 @@
 }
 
 .forecast {
-  background: white;
   padding: 12px;
   border-radius: 12px;
   width: 100%;
+}
+.forecast.dark-theme {
+  background: gainsboro;
+}
+.forecast.light-theme {
+  background: white;
 }
 .forecast .forecast-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid gainsboro;
   padding-bottom: 10px;
   margin-bottom: 10px;
+}
+.forecast .forecast-item.dark-theme {
+  border-bottom: 1px solid #c2c2c2;
+}
+.forecast .forecast-item.light-theme {
+  border-bottom: 1px solid gainsboro;
+  color: slategray;
 }
 .forecast .forecast-item:last-child {
   border-bottom: none;
@@ -89,6 +112,10 @@
 .forecast .forecast-date-day .forecast-day {
   font-size: 18px;
   font-weight: 700;
+  margin-bottom: 4px;
+}
+.forecast .forecast-date-day .forecast-date {
+  font-size: 14px;
 }
 .forecast .forecast-temp {
   width: 40px;
@@ -111,49 +138,34 @@
   border-radius: 6px;
   padding: 2px;
   margin: 0 12px;
-  background: gainsboro;
   display: flex;
   align-items: center;
   position: relative;
 }
+.temp-bar.dark-theme {
+  background: #c2c2c2;
+}
+.temp-bar.light-theme {
+  background: gainsboro;
+}
 .temp-bar .temp-bar-inner {
-  background: black;
   height: 8px;
   border-radius: 4px;
   position: absolute;
 }
+.temp-bar .temp-bar-inner.dark-theme {
+  background: black;
+}
+.temp-bar .temp-bar-inner.light-theme {
+  background: slategray;
+}
 .temp-bar .temp-bar-current {
-  background: white;
   height: 8px;
   width: 8px;
   border-radius: 50%;
   position: absolute;
   z-index: 1000;
-}
-
-.top-bar {
-  background: black;
-  color: white;
-  width: 100%;
-  height: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 12px;
-}
-@media (max-width: 768px) {
-  .top-bar .greeting {
-    display: none;
-  }
-}
-.top-bar .location {
-  display: flex;
-  gap: 4px;
-}
-.top-bar .time .digits {
-  text-align: center;
-  display: inline-block;
-  width: 22px;
+  background: white;
 }
 
 .search-options {
@@ -173,12 +185,20 @@
 }
 
 .search-bar {
-  background: white;
   height: 40px;
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
+}
+.search-bar.dark-theme {
+  background: gainsboro;
+}
+.search-bar.light-theme {
+  background: white;
+}
+.search-bar.light-theme input {
+  color: slategray;
 }
 .search-bar input {
   width: calc(100% - 40px);
@@ -188,12 +208,20 @@
 .search-button {
   height: 40px;
   width: 40px;
-  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.search-button img {
+.search-button .icon svg {
   height: 20px;
   width: 20px;
   object-fit: contain;
+}
+.search-button .icon.dark-theme path {
+  stroke: black;
+}
+.search-button .icon.light-theme path {
+  stroke: slategray;
 }
 
 .options {
@@ -210,6 +238,12 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
+}
+.options-button.dark-theme .bar {
+  background: black;
+}
+.options-button.light-theme .bar {
+  background: slategray;
 }
 .options-button .bar {
   width: 100%;
@@ -237,20 +271,38 @@
   position: absolute;
   right: 0;
   top: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.options-menu.dark-theme {
+  color: black;
+}
+.options-menu.light-theme {
+  color: slategray;
 }
 
 .option {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .toggle-button {
-  width: 52px;
+  width: 42px;
   height: 24px;
   background: black;
   border-radius: 12px;
   position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.toggle-button.dark-theme {
+  background: black;
+}
+.toggle-button.light-theme {
+  background: slategray;
 }
 .toggle-button .toggle-button-inner {
   position: absolute;

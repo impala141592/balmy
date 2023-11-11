@@ -7,9 +7,10 @@ const Forecast = ({
   minTempAll,
   currentTemp,
   unit,
+  themeClass,
 }) => {
   return (
-    <div className="forecast-item">
+    <div className={`forecast-item ${themeClass}`}>
       <div className="forecast-date-day">
         <span className="forecast-day">{day}</span>
         <span className="forecast-date">{date}</span>
@@ -25,6 +26,7 @@ const Forecast = ({
           minTempAll={minTempAll}
           maxTempAll={maxTempAll}
           currentTemp={currentTemp}
+          themeClass={themeClass}
         />
         <span className="forecast-temp max">
           {maxTemp}
@@ -35,7 +37,14 @@ const Forecast = ({
   );
 };
 
-const TempBar = ({ minTemp, maxTemp, maxTempAll, minTempAll, currentTemp }) => {
+const TempBar = ({
+  minTemp,
+  maxTemp,
+  maxTempAll,
+  minTempAll,
+  currentTemp,
+  themeClass,
+}) => {
   const width = window.innerWidth > 520 ? 200 : 100;
   const leftPosition =
     ((minTemp - minTempAll) / (maxTempAll - minTempAll)) * width;
@@ -48,15 +57,15 @@ const TempBar = ({ minTemp, maxTemp, maxTempAll, minTempAll, currentTemp }) => {
     ((currentTemp - minTempAll) / (maxTempAll - minTempAll)) * width;
 
   return (
-    <div className="temp-bar" style={{ width: `${width}px` }}>
+    <div className={`temp-bar ${themeClass}`} style={{ width: `${width}px` }}>
       {currentTemp ? (
         <div
           className="temp-bar-current"
-          style={{ left: `${currentPosition}px` }}
+          style={{ left: `${currentPosition - 10}px` }}
         ></div>
       ) : null}
       <div
-        className="temp-bar-inner"
+        className={`temp-bar-inner ${themeClass}`}
         style={{
           right: `${rightPosition + 2}px`,
           left: `${leftPosition + 2}px`,

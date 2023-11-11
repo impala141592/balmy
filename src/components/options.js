@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 
-function Options({ onUnitToggle, unit }) {
+function Options({
+  onUnitToggle,
+  unit,
+  isDarkMode,
+  toggleDarkMode,
+  themeClass,
+}) {
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
 
@@ -28,7 +34,7 @@ function Options({ onUnitToggle, unit }) {
   return (
     <div className="options">
       <button
-        className="options-button"
+        className={`options-button ${themeClass}`}
         onClick={(e) => {
           toggleMenu();
           handleButtonClick(e);
@@ -39,12 +45,26 @@ function Options({ onUnitToggle, unit }) {
         <div className={`${menuVisible ? "bar visible" : "bar"}`}></div>
       </button>
       {menuVisible && (
-        <div className="options-menu" ref={menuRef}>
+        <div className={`options-menu ${themeClass}`} ref={menuRef}>
           <div className="option">
             <span className="option-label">
               Change unit to {unit === "°C" ? "°F" : "°C"}
             </span>
-            <Toggle onToggle={onUnitToggle} unit={unit} />
+            <Toggle
+              onToggle={onUnitToggle}
+              initialPosition="2px"
+              themeClass={themeClass}
+            />
+          </div>
+          <div className="option">
+            <span className="option-label">
+              {isDarkMode ? "Light" : "Dark"} Mode
+            </span>
+            <Toggle
+              onToggle={toggleDarkMode}
+              initialPosition="2px"
+              themeClass={themeClass}
+            />
           </div>
         </div>
       )}
@@ -52,18 +72,22 @@ function Options({ onUnitToggle, unit }) {
   );
 }
 
-const Toggle = ({ onToggle, unit }) => {
+const Toggle = ({ onToggle, initialPosition, themeClass }) => {
+  const [position, setPosition] = useState(initialPosition);
+
+  const handleClick = () => {
+    setPosition((prevPosition) => (prevPosition === "2px" ? "20px" : "2px"));
+    onToggle();
+  };
   return (
-    <div className="toggle">
-      <button className="toggle-button" onClick={onToggle}>
-        <div
-          className="toggle-button-inner"
-          style={{
-            left: `${unit === "°C" ? "2px" : "30px"}`,
-          }}
-        ></div>
-      </button>
-    </div>
+    <button className={`toggle-button ${themeClass}`} onClick={handleClick}>
+      <div
+        className="toggle-button-inner"
+        style={{
+          left: position,
+        }}
+      ></div>
+    </button>
   );
 };
 

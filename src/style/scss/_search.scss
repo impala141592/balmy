@@ -15,12 +15,23 @@
 }
 
 .search-bar {
-  background: white;
   height: 40px;
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
+
+  &.dark-theme {
+    background: gainsboro;
+  }
+
+  &.light-theme {
+    background: white;
+
+    input {
+      color: slategray;
+    }
+  }
 
   input {
     width: calc(100% - 40px);
@@ -31,12 +42,28 @@
 .search-button {
   height: 40px;
   width: 40px;
-  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  img {
-    height: 20px;
-    width: 20px;
-    object-fit: contain;
+  .icon {
+    svg {
+      height: 20px;
+      width: 20px;
+      object-fit: contain;
+    }
+
+    &.dark-theme {
+      path {
+        stroke: black;
+      }
+    }
+
+    &.light-theme {
+      path {
+        stroke: slategray;
+      }
+    }
   }
 }
 
@@ -54,6 +81,18 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
+
+  &.dark-theme {
+    .bar {
+      background: black;
+    }
+  }
+
+  &.light-theme {
+    .bar {
+      background: slategray;
+    }
+  }
 
   .bar {
     width: 100%;
@@ -91,20 +130,42 @@
   position: absolute;
   right: 0;
   top: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  &.dark-theme {
+    color: black;
+  }
+
+  &.light-theme {
+    color: slategray;
+  }
 }
 
 .option {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .toggle-button {
-  width: 52px;
+  width: 42px;
   height: 24px;
   background: black;
   border-radius: 12px;
   position: relative;
+  transition: all 0.2s ease-in-out;
+
+  &.dark-theme {
+    background: black;
+  }
+
+  &.light-theme {
+    background: slategray;
+  }
 
   .toggle-button-inner {
     position: absolute;

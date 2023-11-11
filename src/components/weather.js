@@ -4,7 +4,7 @@ import CurrentWeather from "./currentWeather.js";
 import Forecast from "./forecast.js";
 import Options from "./options.js";
 
-const WeatherApp = () => {
+const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [temperature, setTemperature] = useState(null);
@@ -124,10 +124,18 @@ const WeatherApp = () => {
   return (
     <div className="weather-dashboard">
       <div className="search-options">
-        <SearchBar onSearch={handleSearch} loading={loading} error={error} />
+        <SearchBar
+          onSearch={handleSearch}
+          loading={loading}
+          error={error}
+          themeClass={themeClass}
+        />
         <Options
           unit={unit}
           onUnitToggle={() => toggleUnit(unit === "°C" ? "°F" : "°C")}
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          themeClass={themeClass}
         />
       </div>
       <div className="weather">
@@ -136,8 +144,9 @@ const WeatherApp = () => {
           country={country}
           temperature={temperature}
           unit={unit}
+          themeClass={themeClass}
         />
-        <div className="forecast">
+        <div className={`forecast ${themeClass}`}>
           {forecast.slice(0, 7).map((day, index) => (
             <Forecast
               key={index}
@@ -149,6 +158,7 @@ const WeatherApp = () => {
               minTempAll={minTempAll}
               currentTemp={index === 0 ? temperature : null}
               unit={unit}
+              themeClass={themeClass}
             />
           ))}
         </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { ReactSVG } from "react-svg";
 import searchIcon from "../images/search.svg";
 
-const SearchBar = ({ onSearch, loading, error }) => {
+const SearchBar = ({ onSearch, loading, error, themeClass }) => {
   const [searchText, setSearchText] = useState("");
 
   const handleInputChange = (e) => {
@@ -22,7 +23,7 @@ const SearchBar = ({ onSearch, loading, error }) => {
 
   return (
     <div className="search">
-      <div className="search-bar">
+      <div className={`search-bar ${themeClass}`}>
         <input
           type="text"
           value={searchText}
@@ -31,7 +32,8 @@ const SearchBar = ({ onSearch, loading, error }) => {
           placeholder=""
         />
         <button className="search-button" onClick={handleSearch}>
-          <img src={searchIcon} alt="search" />
+          <ReactSVG src={searchIcon} className={`icon ${themeClass}`} />
+          {/* <img src={searchIcon} alt="search" /> */}
         </button>
       </div>
       {/* add spinner here */}
