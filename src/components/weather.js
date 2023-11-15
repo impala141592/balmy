@@ -22,7 +22,7 @@ const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
     setLoading(true);
     setError(null);
 
-    const apiKey = "fc0844b2a1384e18bc8154636230211";
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${latitude},${longitude}&aqi=no`;
 
     fetch(apiUrl)
@@ -52,7 +52,7 @@ const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
   };
 
   const fetch7DayWeatherForecast = (city) => {
-    const apiKey = "fc0844b2a1384e18bc8154636230211";
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${city}&days=7&aqi=no`;
 
     fetch(apiUrl)
