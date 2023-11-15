@@ -61,7 +61,14 @@ const TempBar = ({
       {currentTemp ? (
         <div
           className="temp-bar-current"
-          style={{ left: `${currentPosition - 10}px` }}
+          style={{
+            left:
+              currentTemp > maxTempAll
+                ? `${width - 10}px`
+                : currentTemp < minTempAll
+                ? `2px`
+                : `${currentPosition - 10}px`,
+          }}
         ></div>
       ) : null}
       <div
