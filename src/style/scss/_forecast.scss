@@ -1,0 +1,64 @@
+.forecast {
+  padding: 12px;
+  border-radius: 12px;
+  width: 100%;
+
+  &.dark-theme {
+    background: gainsboro;
+  }
+
+  &.light-theme {
+    background: white;
+  }
+
+  .forecast-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+    &.dark-theme {
+      border-bottom: 1px solid #c2c2c2;
+    }
+
+    &.light-theme {
+      border-bottom: 1px solid gainsboro;
+      color: slategray;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .forecast-date-day {
+    display: flex;
+    flex-direction: column;
+
+    .forecast-day {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .forecast-date {
+      font-size: 14px;
+    }
+  }
+
+  .forecast-temp {
+    width: 40px;
+    font-size: 14px;
+
+    &.min {
+      text-align: right;
+    }
+
+    &.max {
+      text-align: left;
+    }
+  }
+}

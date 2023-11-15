@@ -1,0 +1,46 @@
+.forecast-temp-graph {
+  display: flex;
+  align-items: center;
+}
+
+.temp-bar {
+  width: 200px;
+  height: 12px;
+  border-radius: 6px;
+  padding: 2px;
+  margin: 0 12px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  &.dark-theme {
+    background: #c2c2c2;
+  }
+
+  &.light-theme {
+    background: gainsboro;
+  }
+
+  .temp-bar-inner {
+    height: 8px;
+    border-radius: 4px;
+    position: absolute;
+
+    &.dark-theme {
+      background: black;
+    }
+
+    &.light-theme {
+      background: slategray;
+    }
+  }
+
+  .temp-bar-current {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1000;
+    background: white;
+  }
+}
