@@ -1,14 +1,24 @@
-const CurrentWeather = ({ city, country, temperature, unit, themeClass }) => {
+const CurrentWeather = ({
+  city,
+  country,
+  temperature,
+  unit,
+  condition,
+  themeClass,
+}) => {
   return (
     <div className={`current-weather ${themeClass}`}>
       <div className="current-location">
         <span className="current-city">{city}</span>
         <span className="current-country">{country}</span>
       </div>
-      <span className="current-temperature">
-        {temperature}
-        {unit}
-      </span>
+      <div className="current-conditions">
+        <span>{condition}</span>
+        <span>
+          {temperature}
+          {unit}
+        </span>
+      </div>
     </div>
   );
 };

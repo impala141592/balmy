@@ -66,12 +66,17 @@
 .current-weather .current-location {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .current-weather .current-location .current-city {
   font-size: 42px;
   font-weight: 700;
 }
-.current-weather .current-temperature {
+.current-weather .current-conditions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 24px;
 }
 

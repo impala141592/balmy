@@ -7,6 +7,7 @@ import Options from "./options.js";
 const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+  const [condition, setCondition] = useState("");
   const [temperature, setTemperature] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [maxTempAll, setMaxTempAll] = useState(null);
@@ -34,7 +35,8 @@ const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
       .then((data) => {
         setCity(data.location.name);
         setCountry(data.location.country);
-
+        setCondition(data.current.condition.text);
+        console.log(data);
         if (unit === "°C") {
           setTemperature(data.current.temp_c);
         } else {
@@ -92,6 +94,7 @@ const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
       setCity("");
       setCountry("");
       setTemperature(null);
+      setCondition(null);
       setLoading(true);
       setError(null);
       fetchWeatherByCoordinates(userCity);
@@ -144,6 +147,7 @@ const WeatherApp = ({ themeClass, isDarkMode, toggleDarkMode }) => {
           country={country}
           temperature={temperature}
           unit={unit}
+          condition={condition}
           themeClass={themeClass}
         />
         <div className={`forecast ${themeClass}`}>
